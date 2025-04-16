@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      max-width: 500px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Feedback Form</h2>
+    <form id="feedbackForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="text" id="course" placeholder="Course Name" required />
+      <input type="number" id="rating" placeholder="Rating (1-5)" required />
+      <textarea id="review" rows="4" placeholder="Write your review here..." required></textarea>
+      <button type="submit">Submit Feedback</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedbackForm');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const feedback = {
+        name: document.getElementById('name').value,
+        course: document.getElementById('course').value,
+        rating: document.getElementById('rating').value,
+        review: document.getElementById('review').value,
+        timestamp: new Date().toISOString()
+      };
+
+      const existing = JSON.parse(localStorage.getItem("feedbacks")) || [];
+      existing.push(feedback);
+      localStorage.setItem("feedbacks", JSON.stringify(existing));
+
+      alert("Thank you! Your feedback has been submitted.");
+      form.reset();
+    });
+  </script>
+
+</body>
+</html>
